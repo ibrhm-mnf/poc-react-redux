@@ -2,18 +2,14 @@ import initialState from './InitialState';
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case "ADD": {
+        case "LOAD_USERS": {
+            let { users } = action;
             return {
                 ...state,
-                count: state.count + 1
+                users
             }
         }
-        case "SUBSTRACT": {
-            return {
-                ...state,
-                count: state.count - 1
-            }
-        }
+
         default:
             return state
     }

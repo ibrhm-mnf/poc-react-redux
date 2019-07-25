@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import * as myActions from './store/MyActions';
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.myActions.loadUsers();
+  }
+
   render() {
+    let { users } = this.props;
     return (
       <div>
-        <button onClick={this.props.onSubsctract}>substract</button>
-        count is {this.props.count}
-        <button onClick={this.props.onAdd}>add</button>
+        {users && users.map((user, index) => {
+          return (
+            <div key={user.id}>{user.name}<span style={{ color: 'red' }}>{user.email}</span></div>
+          )
+        })}
       </div>
     )
   }
@@ -15,14 +25,13 @@ class App extends Component {
 
 const mapStoreToProps = (state) => {
   return {
-    count: state.count
+    users: state.users
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubsctract: () => dispatch({ type: "SUBSTRACT" }),
-    onAdd:() => dispatch({ type: "ADD" })
+    myActions: bindActionCreators(myActions, dispatch)
   }
 }
 
